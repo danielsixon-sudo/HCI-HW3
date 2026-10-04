@@ -63,8 +63,8 @@ def update_question(id: int, req: QuestionRequest):
     # Check each question in the loop to find the ID
     for question in questions:
         if question["id"] == id:
-            questions["q"] = req.question
-            questions["a"] = req.answer
+            question["q"] = req.question
+            question["a"] = req.answer
             return
     # If the end of the loop is reached, the question ID is not in the list
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Question with ID {id} not found")
