@@ -34,6 +34,13 @@ class QuestionRequest(BaseModel):
     question: str
     answer: str
 
+# Resets the question IDs after a question has been removed
+def reset_question_ids(questions): 
+    id = 0
+    for question in questions:
+        question["id"] = id
+        id = id + 1
+
 @app.get("/questions")
 def get_questions():
     return questions
@@ -46,18 +53,17 @@ def add_question(req: QuestionRequest):
         "a": req.answer
     })
 
-# TODO: Add a new route that can be used to delete a question/answer from the dataset.
 @app.delete("/delete/{id}")
 def delete_question(id: int):
     # Check each question in the loop to find the ID
     for question in questions:
         if question["id"] == id:
             questions.remove(question)
+            reset_question_ids(questions=questions)
             return
     # If the end of the loop is reached, the question is not in the list
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Question with ID {id} not found")
     
-# TODO: Add a new route that can be used to update a question/answer within the dataset.
 @app.put("/update/{id}")
 def update_question(id: int, req: QuestionRequest):
     # Check each question in the loop to find the ID
