@@ -71,14 +71,13 @@ def render_question(question):
         
         with ui.dialog() as dialog, ui.card():
             # Allow the user to enter a question
+            ui.label("Update Question").classes("text-2xl font-bold")
             ui.label("Question:").classes("text-lg font-bold")
-            ui.label(question["q"]).classes("text-lg")
-            updated_question = ui.textarea().classes("w-96 text-lg bg-blue-50 p-4 border-2 border-black-500")
+            updated_question = ui.textarea(value=question["q"]).classes("w-96 text-lg bg-blue-50 p-4 border-2 border-black-500")
 
             # Allow the user to enter an answer
             ui.label("Answer:").classes("text-lg font-bold")
-            ui.label(question["a"]).classes("text-lg")
-            updated_answer = ui.textarea().classes("w-96 text-lg bg-blue-50 p-4 border-2 border-black-500")
+            updated_answer = ui.textarea(value=question["a"]).classes("w-96 text-lg bg-blue-50 p-4 border-2 border-black-500")
 
             # Logic for updating question after pressing update button
             ui.button('Update question', on_click=lambda: [
